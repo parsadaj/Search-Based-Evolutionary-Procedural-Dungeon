@@ -22,6 +22,8 @@ def apply_mutation1(dungeon, stride=1, window_size=2):
             # if only there is one wall there, remove it
             if window_sum == 1:
                 updated_dungeon[i:i+window_size, j:j+window_size] = 0
+            elif window_sum == 3:
+                updated_dungeon[i:i+window_size, j:j+window_size] = 1
             else:
                 updated_dungeon[i:i+window_size, j:j+window_size] = dungeon[i:i+window_size, j:j+window_size]
 
@@ -140,14 +142,14 @@ def mutate(dungeon):
     Returns:
     - Updated NumPy array representing the modified dungeon layout.
     """
-    mutation_type = np.random.choice([1, 2, 3])
+    mutation_type = np.random.choice([1, 2]) #, 3])
 
     if mutation_type == 1:
         return apply_mutation1(dungeon)
     elif mutation_type == 2:
         return apply_mutation2(dungeon)
-    elif mutation_type == 3:
-        return apply_mutation3(dungeon)
+    # elif mutation_type == 3:
+    #     return apply_mutation3(dungeon)
 
 # # Mutate the first dungeon layout
 # mutated_dungeon = mutate(sample_dungeon)

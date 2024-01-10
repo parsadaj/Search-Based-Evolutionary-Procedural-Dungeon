@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def generate_random_samples(n, rows=20, cols=20):
+def generate_random_samples(n, rows=20, cols=20, seed=None):
     """
     Generate n random dungeon layouts.
 
@@ -9,12 +9,17 @@ def generate_random_samples(n, rows=20, cols=20):
     - n: Number of samples to generate
     - rows: Number of rows in the dungeon grid (default is 20)
     - cols: Number of columns in the dungeon grid (default is 20)
+    - seed: Seed for random number generation (default is None)
 
     Returns:
     - A NumPy array of size (n, rows, cols) representing random dungeon layouts.
     """
+    if seed is not None:
+        np.random.seed(seed)
+
     samples = np.random.choice([0, 1], size=(n, rows, cols))
     return samples
+
 
 # # Example usage:
 # num_samples = 5
@@ -58,5 +63,24 @@ def plot_dungeon(dungeon):
     for spine in ax.spines.values():
         spine.set_edgecolor('white')
         spine.set_linewidth(2)
- 
+        
+def plot_dungeons(dungeons):
+    """
+    Plot the dungeon using Matplotlib without axis labels.
+    
+    Parameters:
+    - dungeon: NumPy array representing the dungeon layout.
+    """
+    fig, axes = plt.subplots(1, dungeons.shape[0])
+    axes = axes.ravel()
+    for i, ax in enumerate(axes):
+        ax.imshow(dungeons[i], cmap='Greys')
+        ax.set_xticks([])
+        ax.set_yticks([])
+        # ax.axis('off')  # Turn off axis labels
+    
+        for spine in ax.spines.values():
+            spine.set_edgecolor('white')
+            spine.set_linewidth(2)
+    
 # plot_dungeon(sample_dungeon)
